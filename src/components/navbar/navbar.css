@@ -1,0 +1,152 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  padding: 0 20px;
+}
+
+.navbar-scrolled {
+  background-color: rgba(10, 10, 10, 0.98);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  height: 70px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.navbar-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #ff6b6b;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  margin-left: 40px;
+}
+
+.nav-links {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 5px 0;
+  opacity: 0.85;
+}
+
+.nav-links:hover {
+  opacity: 1;
+}
+
+.nav-links::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #ff6b6b;
+  transition: width 0.3s ease;
+}
+
+.nav-links:hover::after {
+  width: 100%;
+}
+
+/* Active link styling */
+.nav-links.active {
+  opacity: 1;
+  color: #ff6b6b;
+}
+
+.nav-links.active::after {
+  width: 100%;
+  background-color: #ff6b6b;
+}
+
+.menu-icon {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+}
+
+.menu-icon span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* Responsive design */
+@media screen and (max-width: 960px) {
+  .menu-icon {
+    display: flex;
+    z-index: 1002;
+  }
+
+  .menu-icon.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .menu-icon.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-icon.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    transition: all 0.5s ease;
+    z-index: 1001;
+  }
+
+  .nav-menu.active {
+    right: 0;
+  }
+
+  .nav-item {
+    margin: 20px 0;
+  }
+
+  .nav-links {
+    font-size: 1.5rem;
+  }
+}
