@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMic, FiMail } from "react-icons/fi";
 import { FaLinkedinIn, FaTwitter, FaInstagram } from "react-icons/fa";
@@ -11,7 +11,6 @@ const Hero = () => {
     "I help e-commerce brands go beyond guesswork—using psychology-backed messaging that moves people from Maybe later... to Take my money!",
     "I use qualitative, behavior-based insights that reveal the subconscious motivators behind your customers' decisions, helping you create ads, messaging, and offers that convert—with Zero Wasted Ad Spend.",
   ];
-  const isAnimatingRef = useRef(false);
 
   // Animation variants for carousel with improved timing
   const carouselVariants = {
@@ -77,12 +76,11 @@ const Hero = () => {
 
   // State for carousel
   const [[page, direction], setPage] = useState([0, 0]);
-
-  // Calculate current index considering infinite looping
   const headlineIndex =
     ((page % headlines.length) + headlines.length) % headlines.length;
+  const isAnimatingRef = useRef(false);
 
-  const paginate = useCallback((newDirection) => {
+  const handleNavigation = (newDirection) => {
     if (!isAnimatingRef.current) {
       isAnimatingRef.current = true;
       setPage(([prevPage]) => [prevPage + newDirection, newDirection]);
@@ -90,18 +88,27 @@ const Hero = () => {
         isAnimatingRef.current = false;
       }, 800);
     }
-  }, []); // Empty dependency array ensures function stability
+  };
 
   // Auto-scroll effect with stable dependencies
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       if (!isAnimatingRef.current) {
-        paginate(1);
+        handleNavigation(1);
       }
     }, 5000);
     return () => clearInterval(interval);
-  }, [paginate]); // paginate is now stable, so effect runs once
+  }, []); // Empty dependency array now works
 
+  // Inline click handlers for buttons
+  const handlePrev = () => handleNavigation(-1);
+  const handleNext = () => handleNavigation(1);
+
+  // Inline indicator click handler
+  const handleIndicatorClick = (index) => {
+    const newDirection = index > headlineIndex ? 1 : -1;
+    setPage([index, newDirection]);
+  }
   return (
     <div className="hero-container">
       <div className="hero-background">
