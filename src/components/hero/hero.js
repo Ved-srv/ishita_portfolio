@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMic, FiMail } from "react-icons/fi";
 import { FaLinkedinIn, FaTwitter, FaInstagram } from "react-icons/fa";
@@ -210,33 +210,25 @@ const Hero = () => {
         <h3 className="carousel-title">What I Do</h3>
 
         <div className="headline-carousel">
-          <div className="carousel-controls">
-            <button
-              className="carousel-button prev"
-              onClick={() => paginate(-1)}
-            >
-              ←
-            </button>
-            <div className="carousel-indicators">
-              {headlines.map((_, index) => (
-                <div
-                  key={index}
-                  className={`carousel-dot ${
-                    index === headlineIndex ? "active" : ""
-                  }`}
-                  onClick={() =>
-                    setPage([index, index > headlineIndex ? 1 : -1])
-                  }
-                />
-              ))}
-            </div>
-            <button
-              className="carousel-button next"
-              onClick={() => paginate(1)}
-            >
-              →
-            </button>
-          </div>
+        <div className="carousel-controls">
+        <button className="carousel-button prev" onClick={handlePrev}>
+          ←
+        </button>
+        <div className="carousel-indicators">
+          {headlines.map((_, index) => (
+            <div
+              key={index}
+              className={`carousel-dot ${
+                index === headlineIndex ? "active" : ""
+              }`}
+              onClick={() => handleIndicatorClick(index)}
+            />
+          ))}
+        </div>
+        <button className="carousel-button next" onClick={handleNext}>
+          →
+        </button>
+      </div>
 
           <div className="carousel-track">
             <AnimatePresence initial={false} custom={direction} mode="sync">
