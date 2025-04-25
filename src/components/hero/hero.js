@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMic, FiMail } from "react-icons/fi";
 import { FaLinkedinIn, FaTwitter, FaInstagram } from "react-icons/fa";
