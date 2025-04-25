@@ -12,12 +12,6 @@ const Hero = () => {
     "I use qualitative, behavior-based insights that reveal the subconscious motivators behind your customers' decisions, helping you create ads, messaging, and offers that convert—with Zero Wasted Ad Spend.",
   ];
 
-  // Animation variants
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  };
-
   // Animation variants for carousel with improved timing
   const carouselVariants = {
     enter: (direction) => ({
@@ -107,7 +101,7 @@ const Hero = () => {
       }
     }, 5000);
     return () => clearInterval(interval);
-  }, [page, isAnimating]);
+  }, [page, isAnimating, paginate]);
 
   return (
     <div className="hero-container">
