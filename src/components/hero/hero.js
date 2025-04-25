@@ -84,14 +84,16 @@ const Hero = () => {
   // Function to handle pagination with debounce
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const paginate = (newDirection) => {
-    if (!isAnimating) {
-      setIsAnimating(true);
-      setPage([page + newDirection, newDirection]);
-      // Allow time for animation to complete before enabling again
-      setTimeout(() => setIsAnimating(false), 800);
-    }
-  };
+  const paginate = useCallback(
+    (newDirection) => {
+      if (!isAnimating) {
+        setIsAnimating(true);
+        setPage(([prevPage]) => [prevPage + newDirection, newDirection]);
+        setTimeout(() => setIsAnimating(false), 800);
+      }
+    },
+    [isAnimating]
+  );
 
   // Auto-scroll carousel with improved timing
   React.useEffect(() => {
