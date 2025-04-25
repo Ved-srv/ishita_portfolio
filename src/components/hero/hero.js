@@ -11,6 +11,7 @@ const Hero = () => {
     "I help e-commerce brands go beyond guesswork—using psychology-backed messaging that moves people from Maybe later... to Take my money!",
     "I use qualitative, behavior-based insights that reveal the subconscious motivators behind your customers' decisions, helping you create ads, messaging, and offers that convert—with Zero Wasted Ad Spend.",
   ];
+  const isAnimatingRef = useRef(false);
 
   // Animation variants for carousel with improved timing
   const carouselVariants = {
@@ -81,29 +82,25 @@ const Hero = () => {
   const headlineIndex =
     ((page % headlines.length) + headlines.length) % headlines.length;
 
-  // Function to handle pagination with debounce
-  const [isAnimating, setIsAnimating] = useState(false);
+  const paginate = useCallback((newDirection) => {
+    if (!isAnimatingRef.current) {
+      isAnimatingRef.current = true;
+      setPage(([prevPage]) => [prevPage + newDirection, newDirection]);
+      setTimeout(() => {
+        isAnimatingRef.current = false;
+      }, 800);
+    }
+  }, []); // Empty dependency array ensures function stability
 
-  const paginate = useCallback(
-    (newDirection) => {
-      if (!isAnimating) {
-        setIsAnimating(true);
-        setPage(([prevPage]) => [prevPage + newDirection, newDirection]);
-        setTimeout(() => setIsAnimating(false), 800);
-      }
-    },
-    [isAnimating]
-  );
-
-  // Auto-scroll carousel with improved timing
+  // Auto-scroll effect with stable dependencies
   React.useEffect(() => {
     const interval = setInterval(() => {
-      if (!isAnimating) {
+      if (!isAnimatingRef.current) {
         paginate(1);
       }
     }, 5000);
     return () => clearInterval(interval);
-  }, [page, isAnimating, paginate]);
+  }, [paginate]); // paginate is now stable, so effect runs once
 
   return (
     <div className="hero-container">
